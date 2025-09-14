@@ -13,7 +13,7 @@ const Register = () => {
         password:'',
         password_confirmation:''
     }
-    const {register,watch,handleSubmit,formState:{errors}}= useForm<RegisterForm>({
+    const {register,watch, reset ,handleSubmit,formState:{errors}}= useForm<RegisterForm>({
         defaultValues:initialValues
     })
 
@@ -22,8 +22,9 @@ const Register = () => {
     const handleRegister = async(formData:RegisterForm) => {
         // Lógica para manejar el registro del usuario
           try {
-        const {data} = await axios.post('http://192.168.0.114:4000/auth/register',formData)
+        const {data} = await axios.post(`${import.meta.env.VITE_DB_URL}/auth/register`,formData)
         console.log(data)
+        reset(initialValues)
     } catch (error) {
         if(isAxiosError(error) && error.response){
             console.log(error.response.data)
