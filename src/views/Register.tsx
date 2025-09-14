@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form'
+import axios, { isAxiosError } from 'axios'
 import { Link } from 'react-router-dom'
 import { ErrorMessage } from '../components/ErrorMessage'
 import type { RegisterForm } from '../types'
@@ -18,9 +19,17 @@ const Register = () => {
 
 
     const password = watch('password')
-    const handleRegister = (formData:RegisterForm) => {
+    const handleRegister = async(formData:RegisterForm) => {
         // Lógica para manejar el registro del usuario
-        console.log(formData);
+          try {
+        const {data} = await axios.post('http://192.168.0.114:4000/auth/register',formData)
+        console.log(data)
+    } catch (error) {
+        if(isAxiosError(error) && error.response){
+            console.log(error.response.data)
+        }
+
+    }
       }
   return (
        <>
