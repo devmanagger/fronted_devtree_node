@@ -18,7 +18,9 @@ const Login = () => {
          // Lógica para manejar el registro del usuario
           try {
         const {data} = await axiosClients.post(`/auth/login`,formData)
-        toast.success(data)
+        // guardar el token en el localStorage
+        localStorage.setItem('AUTH_TOKEN', data)
+        toast.success('Login successful')
     } catch (error) {
         if(isAxiosError(error) && error.response){
             toast.error(error.response.data.error
