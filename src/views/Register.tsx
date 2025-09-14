@@ -1,7 +1,16 @@
-
+import { Link } from 'react-router-dom'
 const Register = () => {
   return (
-    <div>Register</div>
+       <>
+    <div className="">
+        <nav>
+            <Link to='/auth/login'>
+                Already have an account? Login here.
+            </Link>
+        </nav>
+    </div>
+
+    </>
   )
 }
 

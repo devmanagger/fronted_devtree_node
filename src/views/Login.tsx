@@ -1,8 +1,17 @@
-
+import { Link } from "react-router-dom"
 
 const Login = () => {
   return (
-    <div>Login</div>
+    <>
+
+        <nav>
+            <Link to='/auth/register'>
+              No account? Register here.
+            </Link>
+        </nav>
+
+
+    </>
   )
 }
 
