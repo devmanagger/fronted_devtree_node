@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form'
 import  { isAxiosError } from 'axios'
 import { Link } from 'react-router-dom'
 import {toast} from 'sonner'
+// Components
 import { ErrorMessage } from '../components/ErrorMessage'
 import type { RegisterForm } from '../types'
 import { axiosClients } from '../config'
@@ -29,7 +30,7 @@ const Register = () => {
         reset()
     } catch (error) {
         if(isAxiosError(error) && error.response){
-            toast.error(error.response.data.error
+            toast.error(error.response.data.errors
             )
         }
 
