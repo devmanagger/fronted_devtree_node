@@ -14,7 +14,7 @@ const Register = () => {
     })
 
 
-    console.log(errors)
+    const password = watch('password')
     const handleRegister = () => {
         // Lógica para manejar el registro del usuario
         console.log('Registrando usuario...');
@@ -49,6 +49,10 @@ const Register = () => {
             className="bg-slate-100 border-none p-3 rounded-lg placeholder-slate-400"
          {...register('email',{
                 required:'El Email es obligatorio',
+                pattern:{
+                    value: /\S+@\S+\.\S+/,
+                    message: "E-mail no válido",
+                }
             })}
         />
         {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
@@ -75,6 +79,10 @@ const Register = () => {
             className="bg-slate-100 border-none p-3 rounded-lg placeholder-slate-400"
          {...register('password',{
                 required:'El Password es obligatorio',
+                minLength:{
+                    value:8,
+                    message:'El Password debe tener al menos 8 caracteres'
+                }
             })}
 
         />
@@ -90,6 +98,7 @@ const Register = () => {
             className="bg-slate-100 border-none p-3 rounded-lg placeholder-slate-400"
          {...register('password_confirmation',{
                 required:'El Confirma tu Password',
+                validate: (value) => value === password || 'Los passwords no coinciden'
             })}
         />
         {errors.password_confirmation && <ErrorMessage>{errors.password_confirmation.message}</ErrorMessage>}
