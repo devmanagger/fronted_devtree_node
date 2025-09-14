@@ -1,6 +1,9 @@
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import { ErrorMessage } from '../components/ErrorMessage'
+import type { RegisterForm } from '../types'
+
+
 const Register = () => {
       const initialValues = {
         name:'',
@@ -9,15 +12,15 @@ const Register = () => {
         password:'',
         password_confirmation:''
     }
-    const {register,watch,handleSubmit,formState:{errors}}= useForm({
+    const {register,watch,handleSubmit,formState:{errors}}= useForm<RegisterForm>({
         defaultValues:initialValues
     })
 
 
     const password = watch('password')
-    const handleRegister = () => {
+    const handleRegister = (formData:RegisterForm) => {
         // Lógica para manejar el registro del usuario
-        console.log('Registrando usuario...');
+        console.log(formData);
       }
   return (
        <>
