@@ -1,8 +1,10 @@
 import { useForm } from 'react-hook-form'
-import axios, { isAxiosError } from 'axios'
+import  { isAxiosError } from 'axios'
 import { Link } from 'react-router-dom'
+import {toast} from 'sonner'
 import { ErrorMessage } from '../components/ErrorMessage'
 import type { RegisterForm } from '../types'
+import { axiosClients } from '../config'
 
 
 const Register = () => {
@@ -22,12 +24,13 @@ const Register = () => {
     const handleRegister = async(formData:RegisterForm) => {
         // Lógica para manejar el registro del usuario
           try {
-        const {data} = await axios.post(`${import.meta.env.VITE_DB_URL}/auth/register`,formData)
-        console.log(data)
-        reset(initialValues)
+        const {data} = await axiosClients.post(`/auth/register`,formData)
+        toast.success(data)
+        reset()
     } catch (error) {
         if(isAxiosError(error) && error.response){
-            console.log(error.response.data)
+            toast.error(error.response.data.error
+            )
         }
 
     }
