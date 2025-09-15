@@ -8,7 +8,7 @@ import { ErrorMessage } from "../components/ErrorMessage"
 import type { LoginForm } from "../types"
 import { axiosClients } from "../config"
 
-const Login = () => {
+ export const Login = () => {
     const initialValues = {
         email: '',
         password: ''
@@ -91,5 +91,3 @@ const Login = () => {
     </>
   )
 }
-
-export default Login

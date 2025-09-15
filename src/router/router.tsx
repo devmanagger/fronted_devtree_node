@@ -1,10 +1,8 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Login from '../views/Login'
-import Register from '../views/Register'
-import { AuthLayou } from '../layout/AuthLayou'
+import { LinkTreeView, Login, ProfileView, Register } from '../views'
+import { AppLayou , AuthLayou} from '../layout'
+
 export const AppRouter = () => {
-    //auth/register
-    //auth/login
   return (
     <BrowserRouter>
         {/* Your routes and components go here */}
@@ -13,6 +11,11 @@ export const AppRouter = () => {
                 <Route path='/auth/login' element={<Login/>}/>
                 <Route path='/auth/register' element={<Register/>}/>
             </Route>
+            {/* Dashboar  */}
+           <Route path="/admin" element={<AppLayou />}>
+             <Route index element={<LinkTreeView />} />
+             <Route path="profile" element={<ProfileView />} />
+           </Route>
         </Routes>
     </BrowserRouter>
   )

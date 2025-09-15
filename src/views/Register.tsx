@@ -8,7 +8,7 @@ import type { RegisterForm } from '../types'
 import { axiosClients } from '../config'
 
 
-const Register = () => {
+ export const Register = () => {
       const initialValues = {
         name:'',
         email:'',
@@ -140,5 +140,3 @@ const Register = () => {
     </>
   )
 }
-
-export default Register
