@@ -13,3 +13,6 @@ export type RegisterForm = Pick<User,'name'|'email'|'handle'> & {
 export type LoginForm = Pick<User,'email'> & {
    password: string;
 }
+export type ProfileForm = Pick<User,'handle'|'description'> & {
+   image?: FileList;
+}
