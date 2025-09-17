@@ -1,8 +1,9 @@
 import {useForm} from 'react-hook-form'
 import { ErrorMessage } from '../components'
-import {  useQueryClient } from '@tanstack/react-query'
+import {  useMutation, useQueryClient } from '@tanstack/react-query'
 
 import type { ProfileForm, User } from '../types'
+import { updateUser } from '../api'
 export const ProfileView = () => {
    const queryClient =useQueryClient()
    //cacheando la data del usuario
@@ -11,9 +12,21 @@ export const ProfileView = () => {
         handle: data.handle,
         description: data.description,
      }})
+
+     //funtion update profile with useMutation
+     const updateProfile = useMutation({
+         mutationFn: updateUser,
+          onError:()=>{
+             console.log('error al actualizar el perfil')
+          },
+          onSuccess:()=>{
+             console.log('perfil actualizado')
+
+          }
+     })
    //funcion que se ejecuta al enviar el formulario
-        const onSubmit = (data: ProfileForm) => {
-        console.log('from data profile ',data)
+        const onSubmit = (formData: ProfileForm) => {
+         updateProfile.mutate(formData)
         }
    return (
         <form
