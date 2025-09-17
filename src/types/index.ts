@@ -17,3 +17,14 @@ export type LoginForm = Pick<User,'email'> & {
 export type ProfileForm = Pick<User,'handle'|'description'> & {
    image?: FileList;
 }
+
+
+//Social link type
+export type SocialNetwork = {
+    id:number;
+    name: string;
+    url: string;
+    enabled: boolean;
+}
+// pick type from social network
+export type DevTreeLinks = Pick<SocialNetwork,'name'|'url'|'enabled'>
