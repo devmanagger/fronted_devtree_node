@@ -28,8 +28,8 @@ import type { ProfileForm, User } from "../types"
     const formData = new FormData()
     formData.append('file', file)
         try {
-         const {data }= await axiosClients.post('/users/image',formData,)
-        return data
+         const { data: { image } }: { data: { image: string } } = await axiosClients.post('/users/image', formData);
+        return image
         } catch (error) {
             if(isAxiosError(error) && error.response){
             throw new Error(error.response.data.message);

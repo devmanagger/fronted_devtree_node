@@ -5,6 +5,7 @@ import {  useMutation, useQueryClient } from '@tanstack/react-query'
 import type { ProfileForm, User } from '../types'
 import { updateUser, uploadImage } from '../api'
 import { toast } from 'sonner'
+
 export const ProfileView = () => {
    const queryClient =useQueryClient()
    //cacheando la data del usuario
@@ -32,16 +33,17 @@ export const ProfileView = () => {
  const uploadImageCloudinary =useMutation({
      mutationFn:uploadImage,
         onError:(error)=>{
-            console.log(error);
+            toast.error(error.message)
         },
         onSuccess:(data)=>{
             console.log('data image',data);
-        }
+             queryClient.setQueryData((['users']),(oldData: User) =>({
+                ...oldData,
+                image:data
+             }))
+             toast.success('Imagen subida correctamente')
+    }
  })
-
-
-
-
 
    //funcion que se ejecuta al enviar el formulario
         const onSubmit = (formData: ProfileForm) => {
