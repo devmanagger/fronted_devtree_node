@@ -4,6 +4,7 @@ import {  useMutation, useQueryClient } from '@tanstack/react-query'
 
 import type { ProfileForm, User } from '../types'
 import { updateUser } from '../api'
+import { toast } from 'sonner'
 export const ProfileView = () => {
    const queryClient =useQueryClient()
    //cacheando la data del usuario
@@ -16,11 +17,14 @@ export const ProfileView = () => {
      //funtion update profile with useMutation
      const updateProfile = useMutation({
          mutationFn: updateUser,
-          onError:()=>{
-             console.log('error al actualizar el perfil')
+          onError:(error)=>{
+             toast.error(error.message)
           },
-          onSuccess:()=>{
-             console.log('perfil actualizado')
+          onSuccess:(data)=>{
+             toast.success(data)
+                queryClient.invalidateQueries({
+                    queryKey: ['users']
+                })
 
           }
      })
