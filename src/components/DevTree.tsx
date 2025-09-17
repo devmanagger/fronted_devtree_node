@@ -9,7 +9,6 @@ type DevTreeProps = {
     data: User
 }
 export const DevTree = ({data}:DevTreeProps) => {
-    console.log(data);
   return (
      <>
             <header className="bg-slate-800 py-5">

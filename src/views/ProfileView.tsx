@@ -3,7 +3,7 @@ import { ErrorMessage } from '../components'
 import {  useMutation, useQueryClient } from '@tanstack/react-query'
 
 import type { ProfileForm, User } from '../types'
-import { updateUser } from '../api'
+import { updateUser, uploadImage } from '../api'
 import { toast } from 'sonner'
 export const ProfileView = () => {
    const queryClient =useQueryClient()
@@ -28,9 +28,31 @@ export const ProfileView = () => {
 
           }
      })
+     // funcion para subir imagen a cloudinary
+ const uploadImageCloudinary =useMutation({
+     mutationFn:uploadImage,
+        onError:(error)=>{
+            console.log(error);
+        },
+        onSuccess:(data)=>{
+            console.log('data image',data);
+        }
+ })
+
+
+
+
+
    //funcion que se ejecuta al enviar el formulario
         const onSubmit = (formData: ProfileForm) => {
          updateProfile.mutate(formData)
+        }
+    //funcion que se ejecuta al cambiar la imagen
+        const handleChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+            if(e.target.files){
+                uploadImageCloudinary.mutate(e.target.files[0]);
+
+            }
         }
    return (
         <form
@@ -73,7 +95,7 @@ export const ProfileView = () => {
                     name="handle"
                     className="border-none bg-slate-100 rounded-lg p-2"
                     accept="image/*"
-                    onChange={ () => {} }
+                    onChange={handleChangeImage}
                 />
             </div>
 
