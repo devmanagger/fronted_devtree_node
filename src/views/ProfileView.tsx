@@ -1,6 +1,6 @@
 import {useForm} from 'react-hook-form'
 import { ErrorMessage } from '../components'
-import {  useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQueryClient, QueryClient } from '@tanstack/react-query';
 
 import type { ProfileForm, User } from '../types'
 import { updateUser, uploadImage } from '../api'
@@ -47,7 +47,10 @@ export const ProfileView = () => {
 
    //funcion que se ejecuta al enviar el formulario
         const onSubmit = (formData: ProfileForm) => {
-         updateProfile.mutate(formData)
+            const user: User = queryClient.getQueryData(['users'])!
+                 user.description = formData.description
+                 user.handle = formData.handle
+                 updateProfile.mutate(user)
         }
     //funcion que se ejecuta al cambiar la imagen
         const handleChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {

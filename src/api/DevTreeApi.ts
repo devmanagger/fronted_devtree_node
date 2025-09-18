@@ -1,6 +1,6 @@
 import { isAxiosError } from "axios"
 import { axiosClients } from "../config"
-import type { ProfileForm, User } from "../types"
+import type {  User } from "../types"
 
 
  export  const getUser = async () => {
@@ -13,7 +13,7 @@ import type { ProfileForm, User } from "../types"
         }
     }
 }
- export  const updateUser = async (formData:ProfileForm) => {
+ export  const updateUser = async (formData:User) => {
         try {
              const {data} = await axiosClients.patch<String>('/users',formData)
              return data
