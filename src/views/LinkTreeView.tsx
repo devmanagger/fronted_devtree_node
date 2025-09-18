@@ -2,6 +2,7 @@ import { useState } from "react"
 import { social } from "../data"
 import { DevTreeInpu } from "../components"
 
+
 export const LinkTreeView = () => {
     //State for social links
     const [devTreeLinks, setDevTreeLinks]= useState(social)
@@ -15,10 +16,20 @@ export const LinkTreeView = () => {
         //actualiza el estado
         setDevTreeLinks(updatedLinks)
     }
+    //Desabilitar el switch por ahora
+    const handleSwitchLinks = (SocialNetwork: string) => {
+        const updatedLinks = devTreeLinks.map(link => link.name === SocialNetwork ? {...link, enabled: !link.enabled} : link)
+        setDevTreeLinks(updatedLinks)
+    }
   return (
     <div className="space-y-5">
         {devTreeLinks.map(item =>(
-            <DevTreeInpu key={item.name} item={item} handleUrlChange ={handleUrlChange} />
+            <DevTreeInpu
+            key={item.name}
+            item={item}
+            handleUrlChange ={handleUrlChange}
+             handleSwitchLinks={handleSwitchLinks}
+             />
         ))}
     </div>
   )

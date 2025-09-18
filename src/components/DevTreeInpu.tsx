@@ -5,10 +5,10 @@ import { classNames } from '../utils'
 type DevTreeInputProps = {
     item: DevTreeLinks
     handleUrlChange: (e : React.ChangeEvent<HTMLInputElement>) => void
-
+    handleSwitchLinks: (socialNetwork: string) => void
 }
 
-export const DevTreeInpu = ({item , handleUrlChange}:DevTreeInputProps) => {
+export const DevTreeInpu = ({item , handleUrlChange ,handleSwitchLinks}:DevTreeInputProps) => {
 
   return (
     <div className="bg-white shadow-sm p-5 flex items-center gap-3 border border-gray-200 rounded-3xl">
@@ -24,11 +24,10 @@ export const DevTreeInpu = ({item , handleUrlChange}:DevTreeInputProps) => {
         placeholder={`Enter your ${item.name} URL`}
         value={item.url}
         onChange={handleUrlChange}
-
         />
           <Switch
           checked={item.enabled}
-          onChange={() => {}}
+          onChange={() => handleSwitchLinks(item.name)}
            className={classNames(
           item.enabled ? 'bg-blue-500' : 'bg-gray-200',
           'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
