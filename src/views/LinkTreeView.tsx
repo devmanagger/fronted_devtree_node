@@ -1,6 +1,8 @@
 import { useState } from "react"
 import { social } from "../data"
 import { DevTreeInpu } from "../components"
+import { isValidUrl } from "../utils"
+import { toast } from "sonner"
 
 
 export const LinkTreeView = () => {
@@ -12,13 +14,23 @@ export const LinkTreeView = () => {
     const handleUrlChange = (e : React.ChangeEvent<HTMLInputElement>) => {
         //ingresa el valor y el nombre del input
         const updatedLinks = devTreeLinks.map(link => link.name === e.target.name ? {...link, url: e.target.value} : link)
-        console.log(updatedLinks)
         //actualiza el estado
         setDevTreeLinks(updatedLinks)
     }
     //Desabilitar el switch por ahora
     const handleSwitchLinks = (SocialNetwork: string) => {
-        const updatedLinks = devTreeLinks.map(link => link.name === SocialNetwork ? {...link, enabled: !link.enabled} : link)
+        const updatedLinks = devTreeLinks.map(link => {
+            if(link.name === SocialNetwork) {
+                if(isValidUrl(link.url)){
+                    return {...link, enabled: !link.enabled}
+                }else{
+                    toast.error('Please enter a valid URL',)
+                }
+            }
+            return link
+        })
+        //setDevTreeLinks(updatedLinks)
+        console.log('Toggle clicked', SocialNetwork)
         setDevTreeLinks(updatedLinks)
     }
   return (
