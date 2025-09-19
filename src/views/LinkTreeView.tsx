@@ -7,7 +7,7 @@ import { social } from "../data"
 // components
 import { DevTreeInpu } from "../components"
 import { isValidUrl } from "../utils"
-import type { User } from "../types"
+import type { SocialNetwork, User } from "../types"
 
 
 export const LinkTreeView = () => {
@@ -29,7 +29,7 @@ export const LinkTreeView = () => {
    //Montando efecto 1 ves  cuando este listo
    useEffect(() => {
     const updateData =devTreeLinks.map(item =>{
-        const userLink =JSON.parse(user.links).find(link =>link.name === item.name)
+        const userLink =JSON.parse(user.links).find((link:SocialNetwork )=>link.name === item.name)
         if(userLink){
             return{
                 ...item,
