@@ -1,6 +1,5 @@
-import {Login} from './Login'
-import {Register} from './Register'
-import {LinkTreeView} from './LinkTreeView'
-import {ProfileView} from './ProfileView'
-
-export {Login, Register , LinkTreeView , ProfileView}
+export * from "./HandleView";
+export * from "./LinkTreeView";
+export * from "./Login";
+export * from "./ProfileView";
+export * from "./Register";
