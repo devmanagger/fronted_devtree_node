@@ -83,7 +83,26 @@ export const LinkTreeView = () => {
             };
             updatedItems = [...links, newItem];
         } else {
-            updatedItems = links.filter((link) => link.name !== socialNetwork);
+            const indexToUpdated = links.findIndex(
+                (link) => link.name === socialNetwork
+            );
+            updatedItems = links.map((link) => {
+                if (link.name === socialNetwork) {
+                    return {
+                        ...link,
+                        id: 0,
+                        enabled: false,
+                    };
+                } else if (link.id > indexToUpdated) {
+                    return {
+                        ...link,
+                        id: link.id - 1,
+                    };
+                } else {
+                    return link;
+                }
+            });
+            console.log(indexToUpdated);
         }
         console.log(updatedItems);
         //Almacena en la base de datos
