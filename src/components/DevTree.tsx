@@ -16,6 +16,7 @@ import { Link, Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 import type { SocialNetwork, User } from "../types";
 import { DevTreeLinks } from "./DevTreeLinks";
+import { QueryClient, useQueryClient } from "@tanstack/react-query";
 
 type DevTreeProps = {
     data: User;
@@ -30,6 +31,9 @@ export const DevTree = ({ data }: DevTreeProps) => {
             JSON.parse(data.links).filter((item: SocialNetwork) => item.enabled)
         );
     }, [data]);
+
+    const queryClient = useQueryClient();
+
     const handleDragEnd = (e: DragEndEvent) => {
         const { active, over } = e;
         if (over && over.id) {
@@ -41,6 +45,16 @@ export const DevTree = ({ data }: DevTreeProps) => {
             );
             const order = arrayMove(enableLinks, prevIndex, newIndex);
             setEnableLinks(order);
+            const disabledLinks: SocialNetwork[] = JSON.parse(
+                data.links
+            ).filter((item: SocialNetwork) => !item.enabled);
+            const links = order.concat(disabledLinks);
+            queryClient.setQueryData(["users"], (prevData: User) => {
+                return {
+                    ...prevData,
+                    links: JSON.stringify(links),
+                };
+            });
         }
     };
     return (
