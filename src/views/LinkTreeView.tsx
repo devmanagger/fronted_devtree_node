@@ -57,6 +57,7 @@ export const LinkTreeView = () => {
     //Desabilitar el switch por ahora
 
     //WORKIN HERE!
+    const links: SocialNetwork[] = JSON.parse(user.links);
     const handleSwitchLinks = (socialNetwork: string) => {
         const updatedLinks = devTreeLinks.map((link) => {
             if (link.name === socialNetwork) {
@@ -70,20 +71,26 @@ export const LinkTreeView = () => {
         });
         //setDevTreeLinks(updatedLinks)
         setDevTreeLinks(updatedLinks);
+
+        let updatedItems: SocialNetwork[] = [];
         const selectedSocialNetwork = updatedLinks.find(
             (link) => link.name === socialNetwork
         );
         if (selectedSocialNetwork?.enabled) {
-            console.log("Habilitada", selectedSocialNetwork);
+            const newItem = {
+                ...selectedSocialNetwork,
+                id: links.length + 1,
+            };
+            updatedItems = [...links, newItem];
         } else {
             console.log("Deshabilitada..");
         }
-
+        console.log(updatedItems);
         //Almacena en la base de datos
         queryClient.setQueryData(["users"], (prevData: User) => {
             return {
                 ...prevData,
-                links: JSON.stringify(updatedLinks),
+                links: JSON.stringify(updatedItems),
             };
         });
     };
