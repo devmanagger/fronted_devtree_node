@@ -1,6 +1,11 @@
 import { NavigationTabs } from "./NavigationTabs";
 import { Toaster } from "sonner";
-import { DndContext, DragAbortEvent, closestCenter } from "@dnd-kit/core";
+import {
+    DndContext,
+    DragAbortEvent,
+    closestCenter,
+    type DragEndEvent,
+} from "@dnd-kit/core";
 import {
     SortableContext,
     verticalListSortingStrategy,
@@ -25,8 +30,18 @@ export const DevTree = ({ data }: DevTreeProps) => {
             JSON.parse(data.links).filter((item: SocialNetwork) => item.enabled)
         );
     }, [data]);
-    const handleDragEnd = () => {
-        console.log("Drag movie");
+    const handleDragEnd = (e: DragEndEvent) => {
+        const { active, over } = e;
+        if (over && over.id) {
+            const prevIndex = enableLinks.findIndex(
+                (link) => link.id === active.id
+            );
+            const newIndex = enableLinks.findIndex(
+                (link) => link.id === over.id
+            );
+            const order = arrayMove(enableLinks, prevIndex, newIndex);
+            setEnableLinks(order);
+        }
     };
     return (
         <>
