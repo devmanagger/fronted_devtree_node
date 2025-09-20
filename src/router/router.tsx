@@ -3,6 +3,7 @@ import {
     HandleView,
     LinkTreeView,
     Login,
+    NotFoundView,
     ProfileView,
     Register,
 } from "../views";
@@ -24,6 +25,9 @@ export const AppRouter = () => {
                 </Route>
                 <Route path="/:handle" element={<AuthLayou />}>
                     <Route element={<HandleView />} index={true} />
+                </Route>
+                <Route path="/404" element={<AuthLayou />}>
+                    <Route element={<NotFoundView />} index={true} />
                 </Route>
             </Routes>
         </BrowserRouter>
