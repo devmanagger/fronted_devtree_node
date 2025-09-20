@@ -1,5 +1,11 @@
 import { NavigationTabs } from "./NavigationTabs";
 import { Toaster } from "sonner";
+import { DndContext, DragAbortEvent, closestCenter } from "@dnd-kit/core";
+import {
+    SortableContext,
+    verticalListSortingStrategy,
+    arrayMove,
+} from "@dnd-kit/sortable";
 import { Link, Outlet } from "react-router-dom";
 
 import { useEffect, useState } from "react";
@@ -19,6 +25,9 @@ export const DevTree = ({ data }: DevTreeProps) => {
             JSON.parse(data.links).filter((item: SocialNetwork) => item.enabled)
         );
     }, [data]);
+    const handleDragEnd = () => {
+        console.log("Drag movie");
+    };
     return (
         <>
             <header className="bg-slate-800 py-5">
@@ -69,14 +78,24 @@ export const DevTree = ({ data }: DevTreeProps) => {
                                 {data.description}
                             </p>
 
-                            <div className="mt-20 flex flex-col gap-5">
-                                {enableLinks.map((link) => (
-                                    <DevTreeLinks
-                                        key={link.name}
-                                        links={link}
-                                    />
-                                ))}
-                            </div>
+                            <DndContext
+                                collisionDetection={closestCenter}
+                                onDragEnd={handleDragEnd}
+                            >
+                                <div className="mt-20 flex flex-col gap-5">
+                                    <SortableContext
+                                        items={enableLinks}
+                                        strategy={verticalListSortingStrategy}
+                                    >
+                                        {enableLinks.map((link) => (
+                                            <DevTreeLinks
+                                                key={link.name}
+                                                links={link}
+                                            />
+                                        ))}
+                                    </SortableContext>
+                                </div>
+                            </DndContext>
                         </div>
                     </div>
                 </main>
