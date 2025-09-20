@@ -83,7 +83,7 @@ export const LinkTreeView = () => {
             };
             updatedItems = [...links, newItem];
         } else {
-            console.log("Deshabilitada..");
+            updatedItems = links.filter((link) => link.name !== socialNetwork);
         }
         console.log(updatedItems);
         //Almacena en la base de datos
