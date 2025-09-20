@@ -77,11 +77,25 @@ export const LinkTreeView = () => {
             (link) => link.name === socialNetwork
         );
         if (selectedSocialNetwork?.enabled) {
-            const newItem = {
-                ...selectedSocialNetwork,
-                id: links.length + 1,
-            };
-            updatedItems = [...links, newItem];
+            const id = links.filter((link) => link.id).length + 1;
+            if (links.some((link) => link.name === socialNetwork)) {
+                updatedItems.map((link) => {
+                    if (link.name === socialNetwork) {
+                        return {
+                            ...link,
+                            enabled: true,
+                            id,
+                        };
+                    } else {
+                    }
+                });
+            } else {
+                const newItem = {
+                    ...selectedSocialNetwork,
+                    id,
+                };
+                updatedItems = [...links, newItem];
+            }
         } else {
             const indexToUpdated = links.findIndex(
                 (link) => link.name === socialNetwork
@@ -102,9 +116,8 @@ export const LinkTreeView = () => {
                     return link;
                 }
             });
-            console.log(indexToUpdated);
         }
-        console.log(updatedItems);
+
         //Almacena en la base de datos
         queryClient.setQueryData(["users"], (prevData: User) => {
             return {
