@@ -2,7 +2,6 @@ import { NavigationTabs } from "./NavigationTabs";
 import { Toaster } from "sonner";
 import {
     DndContext,
-    DragAbortEvent,
     closestCenter,
     type DragEndEvent,
 } from "@dnd-kit/core";
@@ -16,7 +15,7 @@ import { Link, Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 import type { SocialNetwork, User } from "../types";
 import { DevTreeLinks } from "./DevTreeLinks";
-import { QueryClient, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { Header } from "./Header";
 
 type DevTreeProps = {
