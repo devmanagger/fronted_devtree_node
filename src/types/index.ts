@@ -26,4 +26,11 @@ export type SocialNetwork = {
     enabled: boolean;
 };
 // pick type from social network
+
 export type DevTreeLinks = Pick<SocialNetwork, "name" | "url" | "enabled">;
+
+//handle type
+export type UserHandle = Pick<
+    User,
+    "description" | "handle" | "image" | "name" | "links"
+>;

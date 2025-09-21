@@ -1,6 +1,6 @@
 import { isAxiosError } from "axios";
 import { axiosClients } from "../config";
-import type { User } from "../types";
+import type { User, UserHandle } from "../types";
 
 export const getUser = async () => {
     try {
@@ -42,7 +42,7 @@ export const uploadImage = async (file: File) => {
 export const getUserByHandle = async (handle: string) => {
     try {
         const url = `/${handle}`;
-        const { data } = await axiosClients(url);
+        const { data } = await axiosClients<UserHandle>(url);
         return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {

@@ -1,6 +1,7 @@
 import { Navigate, useParams } from "react-router-dom";
 import { getUserByHandle } from "../api";
 import { useQuery } from "@tanstack/react-query";
+import { HandleData } from "../components";
 
 export const HandleView = () => {
     const params = useParams();
@@ -14,7 +15,5 @@ export const HandleView = () => {
     // si esta cargando validamos la carga
     if (isLoading) return <p className="text-center text-white">Carcando...</p>;
     if (error) return <Navigate to={"/404"} />;
-    console.log(data);
-
-    return <div>HandleView</div>;
+    if (data) return <HandleData key={data.name} data={data} />;
 };
