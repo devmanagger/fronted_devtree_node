@@ -6,3 +6,4 @@ export * from "./HandleData";
 export * from "./Header";
 export * from "./Logo";
 export * from "./NavigationTabs";
+export * from "./SearchForm";

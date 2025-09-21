@@ -7,7 +7,7 @@ export const AppLayou = () => {
     const { data, isLoading, isError } = useQuery({
         queryKey: ["users"],
         queryFn: getUser,
-        retry: 1,
+        retry: 2,
         refetchOnWindowFocus: false,
     });
     if (isLoading)

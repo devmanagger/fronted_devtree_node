@@ -1,6 +1,6 @@
 import { isAxiosError } from "axios";
 import { toast } from "sonner";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 // Components
@@ -9,22 +9,25 @@ import type { LoginForm } from "../types";
 import { axiosClients } from "../config";
 
 export const Login = () => {
+    const navigate = useNavigate();
     const initialValues = {
         email: "",
         password: "",
     };
+
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm<LoginForm>({ defaultValues: initialValues });
+
     const handleLogin = async (formData: LoginForm) => {
         // Lógica para manejar el registro del usuario
         try {
             const { data } = await axiosClients.post(`/auth/login`, formData);
             // guardar el token en el localStorage
             localStorage.setItem("AUTH_TOKEN", data);
-            toast.success("Login successful");
+            navigate("/admin");
         } catch (error) {
             if (isAxiosError(error) && error.response) {
                 toast.error(error.response.data.error);
