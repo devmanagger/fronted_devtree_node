@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import {
     HandleView,
+    HomeView,
     LinkTreeView,
     Login,
     NotFoundView,
@@ -23,6 +24,8 @@ export const AppRouter = () => {
                     <Route index element={<LinkTreeView />} />
                     <Route path="profile" element={<ProfileView />} />
                 </Route>
+
+                <Route path="/" element={<HomeView />} />
                 <Route path="/:handle" element={<AuthLayou />}>
                     <Route element={<HandleView />} index={true} />
                 </Route>

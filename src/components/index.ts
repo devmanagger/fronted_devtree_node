@@ -3,4 +3,6 @@ export * from "./DevTreeInpu";
 export * from "./DevTreeLinks";
 export * from "./ErrorMessage";
 export * from "./HandleData";
+export * from "./Header";
+export * from "./Logo";
 export * from "./NavigationTabs";
