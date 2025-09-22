@@ -1,12 +1,12 @@
 import { Navigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { DevTree } from "../components/DevTree";
-import { getUser } from "../api";
+import { handleCurrentUser } from "../auth/services/auth.service";
 
 export const AppLayou = () => {
     const { data, isLoading, isError } = useQuery({
         queryKey: ["users"],
-        queryFn: getUser,
+        queryFn: handleCurrentUser,
         retry: 1,
         refetchOnWindowFocus: false,
     });

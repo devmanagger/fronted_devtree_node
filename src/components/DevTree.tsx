@@ -22,13 +22,24 @@ type DevTreeProps = {
     data: User;
 };
 export const DevTree = ({ data }: DevTreeProps) => {
+    // Función segura para parsear links
+    const safeParseLinks = (links: string | SocialNetwork[]): SocialNetwork[] => {
+        if (Array.isArray(links)) return links;
+        try {
+            const parsed = JSON.parse(links);
+            return Array.isArray(parsed) ? parsed : [];
+        } catch {
+            return [];
+        }
+    };
+
     const [enableLinks, setEnableLinks] = useState<SocialNetwork[]>(
-        JSON.parse(data.links).filter((item: SocialNetwork) => item.enabled)
+        safeParseLinks(data.links).filter((item: SocialNetwork) => item.enabled)
     );
 
     useEffect(() => {
         setEnableLinks(
-            JSON.parse(data.links).filter((item: SocialNetwork) => item.enabled)
+            safeParseLinks(data.links).filter((item: SocialNetwork) => item.enabled)
         );
     }, [data]);
 
@@ -45,9 +56,7 @@ export const DevTree = ({ data }: DevTreeProps) => {
             );
             const order = arrayMove(enableLinks, prevIndex, newIndex);
             setEnableLinks(order);
-            const disabledLinks: SocialNetwork[] = JSON.parse(
-                data.links
-            ).filter((item: SocialNetwork) => !item.enabled);
+            const disabledLinks: SocialNetwork[] = safeParseLinks(data.links).filter((item: SocialNetwork) => !item.enabled);
             const links = order.concat(disabledLinks);
             queryClient.setQueryData(["users"], (prevData: User) => {
                 return {

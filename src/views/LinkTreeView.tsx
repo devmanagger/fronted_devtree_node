@@ -10,6 +10,17 @@ import { isValidUrl } from "../utils";
 import type { SocialNetwork, User } from "../types";
 
 export const LinkTreeView = () => {
+
+     const safeParseLinks = (links: string | SocialNetwork[]): SocialNetwork[] => {
+        if (Array.isArray(links)) return links;
+        try {
+            const parsed = JSON.parse(links);
+            return Array.isArray(parsed) ? parsed : [];
+        } catch {
+            return [];
+        }
+    };
+
     //State for social links
     const [devTreeLinks, setDevTreeLinks] = useState(social);
     //mutation function
@@ -28,7 +39,7 @@ export const LinkTreeView = () => {
     //Montando efecto 1 ves  cuando este listo
     useEffect(() => {
         const updateData = devTreeLinks.map((item) => {
-            const userLink = JSON.parse(user.links).find(
+            const userLink = safeParseLinks(user.links).find(
                 (link: SocialNetwork) => link.name === item.name
             );
             if (userLink) {
@@ -57,7 +68,7 @@ export const LinkTreeView = () => {
     //Desabilitar el switch por ahora
 
     //WORKIN HERE!
-    const links: SocialNetwork[] = JSON.parse(user.links);
+    const links: SocialNetwork[] = safeParseLinks(user.links);
     const handleSwitchLinks = (socialNetwork: string) => {
         const updatedLinks = devTreeLinks.map((link) => {
             if (link.name === socialNetwork) {

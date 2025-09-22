@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const axiosClients = axios.create({
-    baseURL: import.meta.env.VITE_DB_URL,
+    baseURL: import.meta.env.VITE_API_URL,
 });
 axiosClients.interceptors.request.use((config) => {
     const token = localStorage.getItem("AUTH_TOKEN");
